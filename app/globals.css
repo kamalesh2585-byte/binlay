@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(132, 183, 145, 0.17), transparent 30%),
+    linear-gradient(180deg, #f9f5ee 0%, #f4efe7 100%);
+  color: #2d1810;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+h3 {
+  font-size: 1.875rem;
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2d7860;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1f5a47;
+}
+
+/* Utility classes */
+.container-custom {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center px-6 py-3 bg-forest-600 text-white rounded-full font-semibold transition-all duration-300 hover:bg-forest-700 hover:shadow-soft-lg active:scale-95 text-base;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center px-6 py-3 bg-sage-200 text-forest-700 rounded-full font-semibold transition-all duration-300 hover:bg-sage-300 active:scale-95 text-base;
+}
+
+.btn-outline {
+  @apply inline-flex items-center justify-center px-6 py-3 border-2 border-white/70 text-white rounded-full font-semibold transition-all duration-300 hover:bg-white/10 active:scale-95 text-base backdrop-blur-sm;
+}
+
+.card-base {
+  @apply bg-white rounded-2xl shadow-soft overflow-hidden transition-all duration-300 border border-sage-100;
+}
+
+.card-hover {
+  @apply hover:shadow-soft-lg hover:-translate-y-1;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #2d7860 0%, #85b791 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Product image container */
+.product-image-container {
+  @apply relative w-full h-64 overflow-hidden bg-sage-50 rounded-t-xl;
+}
+
+.product-image-container img {
+  @apply w-full h-full object-cover transition-transform duration-500;
+}
+
+.product-image-container:hover img {
+  @apply scale-110;
+}
+
+/* Animation utilities */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Stagger animation for children */
+.stagger > * {
+  @apply animate-fade-in;
+}
+
+.stagger > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger > *:nth-child(6) { animation-delay: 0.6s; }
+.stagger > *:nth-child(7) { animation-delay: 0.7s; }
+.stagger > *:nth-child(8) { animation-delay: 0.8s; }
+
+/* Form elements */
+input[type="email"],
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  @apply w-full px-4 py-2 border border-sage-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-forest-500 transition-all duration-300 font-medium;
+}
+
+input[type="email"]::placeholder,
+input[type="text"]::placeholder,
+textarea::placeholder {
+  @apply text-gray-400;
+}
+
+/* Link styling */
+a {
+  @apply transition-colors duration-300;
+}
+
+a:not([class]) {
+  @apply text-forest-600 hover:text-forest-700;
+}
+
+/* Mobile menu animation */
+.mobile-menu-enter {
+  @apply animate-slide-up;
+}
+
+/* Responsive text utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

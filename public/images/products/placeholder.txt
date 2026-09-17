@@ -1,0 +1,15 @@
+Place your product images in this folder with these filenames:
+
+1. virgin-coconut-oil-100ml.jpg
+2. virgin-coconut-oil-500ml.jpg
+3. baby-care-vco-100ml.jpg
+4. coco-vita-gold-powder-200g.jpg
+5. coco-vita-gold-chips-200g.jpg
+6. dessiccated-coconut-powder-500g.jpg
+7. virgin-coconut-oil-1kg.jpg
+8. dessiccated-coconut-powder-1kg.jpg
+
+Images should be:
+- Minimum 500x500px for product cards
+- JPG or PNG format
+- Optimized for web (under 200KB each)
