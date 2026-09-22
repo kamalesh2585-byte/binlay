@@ -22,21 +22,9 @@ export default function ShopPage() {
       </section>
 
       {/* Shop Content */}
-      <section className="py-16 md:py-24">
+      <section className="py-10 md:py-16">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-4 gap-8">
-            {/* Sidebar - Filter would go here on larger screens */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-20">
-                {/* Filter section integrated in ProductFilter component */}
-              </div>
-            </div>
-
-            {/* Main Content */}
-            <div className="lg:col-span-3">
-              <ProductGrid />
-            </div>
-          </div>
+          <ProductGrid />
         </div>
       </section>
     </div>

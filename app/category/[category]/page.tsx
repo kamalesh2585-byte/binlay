@@ -61,10 +61,10 @@ export default function CategoryPage({ params }: CategoryPageProps) {
       </section>
 
       {/* Products */}
-      <section className="py-16 md:py-24">
+      <section className="py-10 md:py-16">
         <div className="container-custom">
           {products.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-5">
               {products.map((product, index) => (
                 <ProductCard
                   key={product.id}

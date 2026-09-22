@@ -28,14 +28,14 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', 'Inter', system-ui, sans-serif;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   line-height: 1.1;
 }
 
 h1 {
   font-size: 3.5rem;
   font-weight: 900;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
 }
 
 h2 {
@@ -96,11 +96,11 @@ p {
 }
 
 .card-base {
-  @apply bg-white rounded-2xl shadow-soft overflow-hidden transition-all duration-300 border border-sage-100;
+  @apply bg-white rounded-lg shadow-soft overflow-hidden transition-shadow duration-200 border border-sage-100;
 }
 
 .card-hover {
-  @apply hover:shadow-soft-lg hover:-translate-y-1;
+  @apply hover:shadow-soft-lg;
 }
 
 .text-gradient {
@@ -112,11 +112,11 @@ p {
 
 /* Product image container */
 .product-image-container {
-  @apply relative w-full h-64 overflow-hidden bg-sage-50 rounded-t-xl;
+  @apply relative w-full h-40 md:h-48 overflow-hidden bg-sage-50 rounded-t-lg;
 }
 
 .product-image-container img {
-  @apply w-full h-full object-cover transition-transform duration-500;
+  @apply w-full h-full object-cover transition-transform duration-300;
 }
 
 .product-image-container:hover img {

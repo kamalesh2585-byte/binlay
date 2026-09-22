@@ -69,16 +69,17 @@ export default function ProductPage() {
       </div>
 
       {/* Product Section */}
-      <section className="py-12 md:py-16">
+      <section className="py-8 md:py-12">
         <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-12 items-start">
+          <div className="grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-8 lg:gap-10 items-start">
             {/* Image */}
             <div className="animate-fade-in">
-              <div className="relative bg-sage-50 rounded-2xl overflow-hidden h-96 md:h-[500px]">
+              <div className="relative bg-sage-50 rounded-xl overflow-hidden h-72 sm:h-80 md:h-[390px] lg:h-[430px]">
                 <img
                   src={product.image}
                   alt={product.name}
                   className="w-full h-full object-cover"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -91,7 +92,7 @@ export default function ProductPage() {
               </p>
 
               {/* Title */}
-              <h1 className="text-4xl font-bold text-forest-900 mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold text-forest-900 mb-4">
                 {product.name}
               </h1>
 
@@ -115,7 +116,7 @@ export default function ProductPage() {
 
               {/* Price */}
               <div className="flex items-baseline gap-3 mb-6 pb-6 border-b border-sage-200">
-                <span className="text-4xl font-bold text-forest-700">
+                <span className="text-3xl font-bold text-forest-700">
                   {formatPrice(currentPrice)}
                 </span>
                 {selectedVariant && (
@@ -133,9 +134,9 @@ export default function ProductPage() {
               )}
 
               {/* Variant Selector */}
-              <div className="mb-8">
+              <div className="mb-6">
                 <h3 className="text-sm font-semibold text-forest-900 mb-3">Select Size/Quantity:</h3>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {product.variants.map((variant) => {
                     const variantPrice = calculatePrice(variant.measurement, variant.pricing)
                     const isSelected = selectedVariant?.id === variant.id
@@ -144,7 +145,7 @@ export default function ProductPage() {
                       <button
                         key={variant.id}
                         onClick={() => setSelectedVariant(variant)}
-                        className={`p-3 rounded-lg border-2 transition-all text-center ${
+                        className={`p-2.5 rounded-lg border-2 transition-colors text-center ${
                           isSelected
                             ? 'border-forest-600 bg-forest-50'
                             : 'border-sage-200 bg-white hover:border-sage-400'
@@ -184,10 +185,10 @@ export default function ProductPage() {
                 </div>
 
                 {/* Buttons */}
-                <div className="flex gap-4">
+                <div className="flex gap-3">
                   <button
                     onClick={handleAddToCart}
-                    className={`flex-grow py-4 rounded-lg font-bold transition-all flex items-center justify-center gap-2 ${
+                    className={`flex-grow py-3 rounded-lg font-bold transition-colors flex items-center justify-center gap-2 ${
                       isAdded
                         ? 'bg-forest-600 text-white'
                         : 'bg-forest-600 text-white hover:bg-forest-700'
@@ -198,7 +199,7 @@ export default function ProductPage() {
                   </button>
                   <button
                     onClick={() => setIsWishlisted(!isWishlisted)}
-                    className="px-6 py-4 border-2 border-sage-200 rounded-lg font-bold hover:border-forest-600 hover:bg-sage-50 transition-all"
+                    className="px-5 py-3 border-2 border-sage-200 rounded-lg font-bold hover:border-forest-600 hover:bg-sage-50 transition-colors"
                     aria-label="Add to wishlist"
                   >
                     <Heart
@@ -249,10 +250,10 @@ export default function ProductPage() {
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (
-        <section className="py-16 md:py-24 bg-white border-t border-sage-100">
+        <section className="py-12 md:py-16 bg-white border-t border-sage-100">
           <div className="container-custom">
             <h2 className="text-3xl font-bold text-forest-900 mb-12">Related Products</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
               {relatedProducts.map((relatedProduct, index) => {
                 const defaultVariant = relatedProduct.variants[0]
                 const defaultPrice = defaultVariant
@@ -263,13 +264,13 @@ export default function ProductPage() {
                   <Link key={relatedProduct.id} href={`/product/${relatedProduct.id}`}>
                     <div className="card-base card-hover cursor-pointer group animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
                       <div className="product-image-container">
-                        <img src={relatedProduct.image} alt={relatedProduct.name} />
+                        <img src={relatedProduct.image} alt={relatedProduct.name} loading="lazy" decoding="async" />
                       </div>
-                      <div className="p-4 space-y-2">
-                        <h3 className="font-bold text-forest-900 group-hover:text-forest-600 transition-colors">
+                      <div className="p-3 space-y-1.5">
+                        <h3 className="text-base font-bold text-forest-900 group-hover:text-forest-600 transition-colors">
                           {relatedProduct.name}
                         </h3>
-                        <p className="text-2xl font-bold text-forest-700">
+                        <p className="text-lg font-bold text-forest-700">
                           {formatPrice(defaultPrice)}
                         </p>
                       </div>

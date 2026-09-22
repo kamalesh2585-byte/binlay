@@ -54,6 +54,8 @@ export default function ProductCard({ product, index = 0, onAddToCart }: Product
             src={product.image}
             alt={product.name}
             className={styles.image}
+            loading="lazy"
+            decoding="async"
           />
 
           {/* Stock Badge */}
