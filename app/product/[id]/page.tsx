@@ -5,9 +5,11 @@ import Link from 'next/link'
 import { Heart, ShoppingCart, Star, Minus, Plus } from 'lucide-react'
 import { getProductById, products, ProductVariant } from '@/lib/products'
 import { calculatePrice, formatPrice, formatMeasurement } from '@/lib/pricing'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
+import { CartManager } from '@/lib/cart'
 
 export default function ProductPage() {
+  const router = useRouter()
   const params = useParams()
   const productId = params.id as string
   const product = getProductById(productId)
@@ -23,7 +25,7 @@ export default function ProductPage() {
     return (
       <div className="min-h-screen bg-coconut-light flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-forest-900 mb-4">Product Not Found</h1>
+          <h1 className="mb-4 text-forest-900">Product Not Found</h1>
           <Link href="/shop" className="btn-primary inline-flex">
             Back to Shop
           </Link>
@@ -41,8 +43,10 @@ export default function ProductPage() {
     : 0
 
   const handleAddToCart = () => {
+    if (!selectedVariant) return
+    CartManager.addItem(product, selectedVariant, quantity)
     setIsAdded(true)
-    setTimeout(() => setIsAdded(false), 2000)
+    router.push('/cart')
   }
 
   const decreaseQuantity = () => {
@@ -69,16 +73,16 @@ export default function ProductPage() {
       </div>
 
       {/* Product Section */}
-      <section className="py-8 md:py-12">
+      <section className="py-10 md:py-16">
         <div className="container-custom">
           <div className="grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-8 lg:gap-10 items-start">
             {/* Image */}
             <div className="animate-fade-in">
-              <div className="relative bg-sage-50 rounded-xl overflow-hidden h-72 sm:h-80 md:h-[390px] lg:h-[430px]">
+              <div className="relative h-72 overflow-hidden rounded-lg bg-sage-50 shadow-soft sm:h-80 md:h-[390px] lg:h-[430px]">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-contain p-6"
                   decoding="async"
                 />
               </div>
@@ -92,7 +96,7 @@ export default function ProductPage() {
               </p>
 
               {/* Title */}
-              <h1 className="text-3xl md:text-4xl font-bold text-forest-900 mb-4">
+              <h1 className="mb-4 text-forest-900">
                 {product.name}
               </h1>
 
@@ -135,7 +139,7 @@ export default function ProductPage() {
 
               {/* Variant Selector */}
               <div className="mb-6">
-                <h3 className="text-sm font-semibold text-forest-900 mb-3">Select Size/Quantity:</h3>
+                <h3 className="mb-3 text-sm font-semibold text-forest-900">Select Size/Quantity:</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {product.variants.map((variant) => {
                     const variantPrice = calculatePrice(variant.measurement, variant.pricing)
@@ -145,7 +149,7 @@ export default function ProductPage() {
                       <button
                         key={variant.id}
                         onClick={() => setSelectedVariant(variant)}
-                        className={`p-2.5 rounded-lg border-2 transition-colors text-center ${
+                        className={`rounded-lg border-2 p-2.5 text-center transition-colors ${
                           isSelected
                             ? 'border-forest-600 bg-forest-50'
                             : 'border-sage-200 bg-white hover:border-sage-400'
@@ -165,7 +169,7 @@ export default function ProductPage() {
                 {/* Quantity Selector */}
                 <div className="flex items-center gap-4">
                   <span className="text-sm font-semibold text-gray-700">Quantity:</span>
-                  <div className="flex items-center border-2 border-sage-200 rounded-lg w-fit">
+                  <div className="flex w-fit items-center rounded-lg border-2 border-sage-200">
                     <button
                       onClick={decreaseQuantity}
                       className="p-2 hover:bg-sage-100 transition-colors"
@@ -188,7 +192,7 @@ export default function ProductPage() {
                 <div className="flex gap-3">
                   <button
                     onClick={handleAddToCart}
-                    className={`flex-grow py-3 rounded-lg font-bold transition-colors flex items-center justify-center gap-2 ${
+                    className={`flex min-h-[44px] flex-grow items-center justify-center gap-2 rounded-lg px-5 py-3 font-bold transition-colors ${
                       isAdded
                         ? 'bg-forest-600 text-white'
                         : 'bg-forest-600 text-white hover:bg-forest-700'
@@ -199,7 +203,7 @@ export default function ProductPage() {
                   </button>
                   <button
                     onClick={() => setIsWishlisted(!isWishlisted)}
-                    className="px-5 py-3 border-2 border-sage-200 rounded-lg font-bold hover:border-forest-600 hover:bg-sage-50 transition-colors"
+                    className="min-h-[44px] rounded-lg border-2 border-sage-200 px-5 py-3 font-bold transition-colors hover:border-forest-600 hover:bg-sage-50"
                     aria-label="Add to wishlist"
                   >
                     <Heart
@@ -215,7 +219,7 @@ export default function ProductPage() {
               </div>
 
               {/* Features */}
-              <div className="bg-sage-50 rounded-lg p-4 space-y-3">
+              <div className="space-y-3 rounded-lg bg-sage-50 p-4">
                 <h3 className="font-bold text-forest-900">Benefits & Features</h3>
                 <ul className="space-y-2 text-sm text-gray-700">
                   {product.benefits && product.benefits.length > 0 ? (
@@ -252,8 +256,8 @@ export default function ProductPage() {
       {relatedProducts.length > 0 && (
         <section className="py-12 md:py-16 bg-white border-t border-sage-100">
           <div className="container-custom">
-            <h2 className="text-3xl font-bold text-forest-900 mb-12">Related Products</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+            <h2 className="mb-10 text-forest-900 md:mb-12">Related Products</h2>
+            <div className="grid grid-cols-1 gap-4 min-[380px]:grid-cols-2 md:grid-cols-3 md:gap-5 lg:grid-cols-4 lg:gap-6">
               {relatedProducts.map((relatedProduct, index) => {
                 const defaultVariant = relatedProduct.variants[0]
                 const defaultPrice = defaultVariant

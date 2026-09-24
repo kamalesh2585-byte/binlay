@@ -1,72 +1,85 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Search, User, Heart, ShoppingCart, Menu, X } from 'lucide-react'
+import { CartManager } from '@/lib/cart'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [cartCount, setCartCount] = useState(0)
+
+  useEffect(() => {
+    const updateCartCount = () => setCartCount(CartManager.getItemCount())
+    updateCartCount()
+    window.addEventListener('binlay-cart-updated', updateCartCount)
+    window.addEventListener('storage', updateCartCount)
+
+    return () => {
+      window.removeEventListener('binlay-cart-updated', updateCartCount)
+      window.removeEventListener('storage', updateCartCount)
+    }
+  }, [])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
   }
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-sage-100 shadow-soft">
+    <header className="sticky top-0 z-40 border-b border-sage-100 bg-white/95 shadow-soft backdrop-blur-md">
       <div className="container-custom">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex h-12 items-center justify-between sm:h-14">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="group flex items-center gap-1.5">
             <img 
               src="/logo.png" 
               alt="Binlay Logo" 
-              className="h-10 w-10 object-contain"
+              className="h-7 w-7 object-contain sm:h-8 sm:w-8"
             />
-            <span className="text-xl font-black text-forest-700 hidden sm:inline tracking-tight">Binlay</span>
+            <span className="hidden text-base font-semibold tracking-normal text-forest-700 sm:inline">Binlay</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-sm uppercase tracking-[0.18em] text-gray-700 hover:text-forest-600 transition-colors font-semibold">
+          <nav className="hidden items-center gap-4 md:flex lg:gap-5">
+            <Link href="/" className="text-sm font-semibold text-gray-700 transition-colors hover:text-forest-600">
               Home
             </Link>
-            <Link href="/shop" className="text-sm uppercase tracking-[0.18em] text-gray-700 hover:text-forest-600 transition-colors font-semibold">
+            <Link href="/shop" className="text-sm font-semibold text-gray-700 transition-colors hover:text-forest-600">
               Shop
             </Link>
-            <Link href="/shop" className="text-sm uppercase tracking-[0.18em] text-gray-700 hover:text-forest-600 transition-colors font-semibold">
+            <Link href="/shop" className="text-sm font-semibold text-gray-700 transition-colors hover:text-forest-600">
               Categories
             </Link>
-            <Link href="/about" className="text-sm uppercase tracking-[0.18em] text-gray-700 hover:text-forest-600 transition-colors font-semibold">
+            <Link href="/about" className="text-sm font-semibold text-gray-700 transition-colors hover:text-forest-600">
               About
             </Link>
-            <Link href="/contact" className="text-sm uppercase tracking-[0.18em] text-gray-700 hover:text-forest-600 transition-colors font-semibold">
+            <Link href="/contact" className="text-sm font-semibold text-gray-700 transition-colors hover:text-forest-600">
               Contact
             </Link>
           </nav>
 
           {/* Right Icons */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-0.5 sm:gap-1">
             {/* Search - Hidden on mobile */}
-            <button className="hidden sm:flex items-center justify-center w-10 h-10 hover:bg-sage-100 rounded-lg transition-colors group" aria-label="Search">
-              <Search size={20} className="text-gray-700 group-hover:text-forest-600 transition-colors" />
+            <button className="group hidden h-8 w-8 items-center justify-center rounded-lg border border-transparent transition-colors hover:border-sage-200 hover:bg-sage-100 sm:flex" aria-label="Search">
+              <Search size={17} className="text-gray-700 group-hover:text-forest-600 transition-colors" />
             </button>
 
             {/* Account */}
-            <Link href="/" className="flex items-center justify-center w-10 h-10 hover:bg-sage-100 rounded-lg transition-colors group" aria-label="Account">
-              <User size={20} className="text-gray-700 group-hover:text-forest-600 transition-colors" />
+            <Link href="/" className="group flex h-8 w-8 items-center justify-center rounded-lg border border-transparent transition-colors hover:border-sage-200 hover:bg-sage-100" aria-label="Account">
+              <User size={17} className="text-gray-700 group-hover:text-forest-600 transition-colors" />
             </Link>
 
             {/* Wishlist */}
-            <Link href="/wishlist" className="flex items-center justify-center w-10 h-10 hover:bg-sage-100 rounded-lg transition-colors group relative" aria-label="Wishlist">
-              <Heart size={20} className="text-gray-700 group-hover:text-forest-600 transition-colors" />
+            <Link href="/wishlist" className="group relative flex h-8 w-8 items-center justify-center rounded-lg border border-transparent transition-colors hover:border-sage-200 hover:bg-sage-100" aria-label="Wishlist">
+              <Heart size={17} className="text-gray-700 group-hover:text-forest-600 transition-colors" />
             </Link>
 
             {/* Cart */}
-            <Link href="/cart" className="flex items-center justify-center w-10 h-10 hover:bg-sage-100 rounded-lg transition-colors group relative" aria-label="Shopping Cart">
-              <ShoppingCart size={20} className="text-gray-700 group-hover:text-forest-600 transition-colors" />
+            <Link href="/cart" className="group relative flex h-8 w-8 items-center justify-center rounded-lg border border-transparent transition-colors hover:border-sage-200 hover:bg-sage-100" aria-label="Shopping Cart">
+              <ShoppingCart size={17} className="text-gray-700 group-hover:text-forest-600 transition-colors" />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-forest-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-forest-600 text-[10px] font-bold text-white">
                   {cartCount > 9 ? '9+' : cartCount}
                 </span>
               )}
@@ -75,7 +88,7 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={toggleMenu}
-              className="md:hidden flex items-center justify-center w-10 h-10 hover:bg-sage-100 rounded-lg transition-colors"
+              className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-sage-100 md:hidden"
               aria-label="Toggle Menu"
             >
               {isMenuOpen ? (
@@ -89,35 +102,35 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="md:hidden pb-4 animate-slide-up">
-            <div className="space-y-3">
+          <nav className="animate-slide-up pb-3 md:hidden">
+            <div className="space-y-1 border-t border-sage-100 pt-3">
               <Link
                 href="/"
-                className="block px-4 py-2 text-gray-700 hover:bg-sage-50 rounded-lg transition-colors"
+                className="block rounded-lg px-4 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-sage-50"
               >
                 Home
               </Link>
               <Link
                 href="/shop"
-                className="block px-4 py-2 text-gray-700 hover:bg-sage-50 rounded-lg transition-colors"
+                className="block rounded-lg px-4 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-sage-50"
               >
                 Shop
               </Link>
               <Link
                 href="/shop"
-                className="block px-4 py-2 text-gray-700 hover:bg-sage-50 rounded-lg transition-colors"
+                className="block rounded-lg px-4 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-sage-50"
               >
                 Categories
               </Link>
               <Link
                 href="/about"
-                className="block px-4 py-2 text-gray-700 hover:bg-sage-50 rounded-lg transition-colors"
+                className="block rounded-lg px-4 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-sage-50"
               >
                 About
               </Link>
               <Link
                 href="/contact"
-                className="block px-4 py-2 text-gray-700 hover:bg-sage-50 rounded-lg transition-colors"
+                className="block rounded-lg px-4 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-sage-50"
               >
                 Contact
               </Link>

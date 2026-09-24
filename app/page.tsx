@@ -1,7 +1,6 @@
 import Hero from '@/components/Hero'
-import CategorySection from '@/components/CategorySection'
-import ProductGrid from '@/components/ProductGrid'
 import OfferBanner from '@/components/OfferBanner'
+import ProductGrid from '@/components/ProductGrid'
 import Testimonials from '@/components/Testimonials'
 import Newsletter from '@/components/Newsletter'
 
@@ -9,27 +8,18 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <CategorySection />
-      
-      {/* Best-Selling Products */}
-      <section className="py-16 md:py-24 bg-coconut-light">
+      <OfferBanner />
+      <section className="bg-coconut-light py-10 md:py-16">
         <div className="container-custom">
-          {/* Section Header */}
-          <div className="mb-12 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-black text-forest-900 mb-4 leading-tight">
-              Best-Selling Products
-            </h2>
-            <p className="text-lg text-gray-600 font-medium">
-              Our most loved coconut products by thousands of customers
+          <div className="mb-2 text-center">
+            <h2 className="text-forest-900">Our 14 Products</h2>
+            <p className="mt-3 text-gray-600">
+              Explore our complete collection of premium coconut products.
             </p>
           </div>
-
-          {/* Product Grid */}
           <ProductGrid />
         </div>
       </section>
-
-      <OfferBanner />
       <Testimonials />
       <Newsletter />
     </>

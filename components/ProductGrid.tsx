@@ -1,14 +1,38 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ProductCard from './ProductCard'
 import ProductFilter from './ProductFilter'
-import { products, Product } from '@/lib/products'
+import { products as fallbackProducts, Product } from '@/lib/products'
 import { calculatePrice } from '@/lib/pricing'
 
 export default function ProductGrid() {
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products)
+  const [allProducts, setAllProducts] = useState<Product[]>(fallbackProducts)
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(fallbackProducts)
   const [sortBy, setSortBy] = useState('featured')
+
+  useEffect(() => {
+    let isMounted = true
+
+    fetch('/api/products')
+      .then(response => {
+        if (!response.ok) throw new Error('Database catalog request failed')
+        return response.json() as Promise<Product[]>
+      })
+      .then(databaseProducts => {
+        if (isMounted && databaseProducts.length > 0) {
+          setAllProducts(databaseProducts)
+          setFilteredProducts(databaseProducts)
+        }
+      })
+      .catch(() => {
+        // Keep the bundled catalog visible when the database is unavailable.
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const handleSort = (value: string) => {
     setSortBy(value)
@@ -45,20 +69,20 @@ export default function ProductGrid() {
 
   const handleFilter = (category: string) => {
     if (category === 'all') {
-      setFilteredProducts(products)
+      setFilteredProducts(allProducts)
     } else {
-      setFilteredProducts(products.filter(p => p.category === category))
+      setFilteredProducts(allProducts.filter(p => p.category === category))
     }
     setSortBy('featured')
   }
 
   return (
-    <div className="py-8 md:py-12 space-y-8">
+    <div className="space-y-8 py-8 md:py-12">
       {/* Filter & Sort */}
       <ProductFilter onSort={handleSort} onFilter={handleFilter} sortBy={sortBy} />
 
       {/* Product Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-5">
+      <div className="grid grid-cols-1 gap-4 min-[380px]:grid-cols-2 md:grid-cols-3 md:gap-5 xl:grid-cols-4 xl:gap-6">
         {filteredProducts.map((product, index) => (
           <ProductCard
             key={product.id}

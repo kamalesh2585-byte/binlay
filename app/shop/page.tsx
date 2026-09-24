@@ -10,9 +10,9 @@ export default function ShopPage() {
   return (
     <div className="min-h-screen bg-coconut-light">
       {/* Header */}
-      <section className="bg-white border-b border-sage-100 py-8 md:py-12">
+      <section className="border-b border-sage-100 bg-white py-10 md:py-14">
         <div className="container-custom">
-          <h1 className="text-4xl md:text-5xl font-bold text-forest-900 mb-4">
+          <h1 className="mb-4 text-forest-900">
             Our Shop
           </h1>
           <p className="text-gray-600 text-lg max-w-2xl">

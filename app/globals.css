@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap');
 
 * {
   margin: 0;
@@ -26,21 +26,21 @@ body {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
-  font-weight: 800;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
   letter-spacing: 0;
-  line-height: 1.1;
+  line-height: 1.08;
 }
 
 h1 {
-  font-size: 3.5rem;
-  font-weight: 900;
-  letter-spacing: 0;
+  font-size: clamp(38px, 6vw, 72px);
+  font-weight: 600;
+  line-height: 1.05;
 }
 
 h2 {
-  font-size: 2.5rem;
-  font-weight: 800;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 600;
 }
 
 h3 {
@@ -54,9 +54,9 @@ h4 {
 }
 
 p {
-  font-size: 1rem;
+  font-size: 15px;
   line-height: 1.6;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 /* Custom scrollbar */
@@ -84,23 +84,23 @@ p {
 }
 
 .btn-primary {
-  @apply inline-flex items-center justify-center px-6 py-3 bg-forest-600 text-white rounded-full font-semibold transition-all duration-300 hover:bg-forest-700 hover:shadow-soft-lg active:scale-95 text-base;
+  @apply inline-flex min-h-[44px] items-center justify-center rounded-lg bg-forest-600 px-[22px] py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-forest-700 hover:shadow-soft-lg active:scale-95;
 }
 
 .btn-secondary {
-  @apply inline-flex items-center justify-center px-6 py-3 bg-sage-200 text-forest-700 rounded-full font-semibold transition-all duration-300 hover:bg-sage-300 active:scale-95 text-base;
+  @apply inline-flex min-h-[44px] items-center justify-center rounded-lg bg-sage-200 px-[22px] py-3 text-base font-semibold text-forest-700 transition-all duration-300 hover:bg-sage-300 active:scale-95;
 }
 
 .btn-outline {
-  @apply inline-flex items-center justify-center px-6 py-3 border-2 border-white/70 text-white rounded-full font-semibold transition-all duration-300 hover:bg-white/10 active:scale-95 text-base backdrop-blur-sm;
+  @apply inline-flex min-h-[44px] items-center justify-center rounded-lg border-2 border-white/70 px-[22px] py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-white/10 active:scale-95 backdrop-blur-sm;
 }
 
 .card-base {
-  @apply bg-white rounded-lg shadow-soft overflow-hidden transition-shadow duration-200 border border-sage-100;
+  @apply overflow-hidden rounded-lg border border-sage-100 bg-white shadow-soft transition-all duration-300;
 }
 
 .card-hover {
-  @apply hover:shadow-soft-lg;
+  @apply hover:-translate-y-1 hover:shadow-soft-lg;
 }
 
 .text-gradient {
@@ -112,11 +112,11 @@ p {
 
 /* Product image container */
 .product-image-container {
-  @apply relative w-full h-40 md:h-48 overflow-hidden bg-sage-50 rounded-t-lg;
+  @apply relative aspect-[4/3] w-full overflow-hidden rounded-t-lg bg-sage-50;
 }
 
 .product-image-container img {
-  @apply w-full h-full object-cover transition-transform duration-300;
+  @apply h-full w-full object-contain p-4 transition-transform duration-300;
 }
 
 .product-image-container:hover img {
